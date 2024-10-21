@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel 1</title>
+    <link rel="stylesheet" href="Style/index.css">
+    <script src="JS/index.js" defer></script> <!-- Asegúrate de que la ruta sea correcta -->
+</head>
+<body>
+    <h1>Nivel 5/h1>
+    <p>Contenido del nivel 5...</p>
+    
+    <!-- Botón para completar el nivel -->
+    <button id="complete-level-button">Completar Nivel</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const completeButton = document.getElementById('complete-level-button');
+            
+            completeButton.addEventListener('click', () => {
+                alert('Nivel 5 completado.');
+                // Completa el nivel y redirige al index.html
+                completeLevel(); // Llama a la función para completar el nivel
+                window.location.href = 'index.html';
+            });
+        });
+
+        function completeLevel() {
+            let currentLevel = parseInt(localStorage.getItem('currentLevel')) || 5; // Obtiene el nivel actual
+            currentLevel++; // Incrementa el nivel
+            localStorage.setItem('currentLevel', currentLevel); // Guarda el nuevo nivel
+        }
+    </script>
+</body>
+</html>

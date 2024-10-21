@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel 1</title>
+    <link rel="stylesheet" href="Style/nive1.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="Style/index.css">
+</head>
+<body>
+
+  
+
+    <!-- Formulario -->
+    <div class="container">
+        <h2>Formulario de Currículum 
+        <!-- Botón para completar el nivel -->
+            <button id="complete-level-button" disabled  >Completar Nivel</button>
+          
+     
+        </h2>
+
+        <!-- Datos personales -->
+        <div class="module">
+            <h3 onclick="toggleVisibility('datos-personales')">Datos Personales <i class="fa-solid fa-user"></i></h3>
+            <div id="datos-personales" class="form-fields">
+                <label>Nombre: <input type="text" id="nombre" oninput="updatePreview()"></label>
+                <label>Apellidos: <input type="text" id="apellidos" oninput="updatePreview()"></label>
+                <label>Título: <input type="text" id="titulo" oninput="updatePreview()"></label>
+                <label>Correo Electrónico: <input type="email" id="correo" oninput="updatePreview()"></label>
+                <label>Teléfono: <input type="tel" id="telefono" oninput="updatePreview()"></label>
+                <label>Dirección: <input type="text" id="direccion" oninput="updatePreview()"></label>
+                <label>Código Postal: <input type="text" id="codigoPostal" oninput="updatePreview()"></label>
+                <label>Localidad: <input type="text" id="localidad" oninput="updatePreview()"></label>
+                <label>Fecha de Nacimiento: <input type="date" id="fechaNacimiento" oninput="updatePreview()"></label>
+                <label>Estado Civil: <input type="text" id="estadoCivil" oninput="updatePreview()"></label>
+                <label>Género: <input type="text" id="genero" oninput="updatePreview()"></label>
+                <label>Foto de Perfil: <input type="file" id="fotoPerfil" accept="image/*" onchange="previewImage(event)"></label>
+            </div>
+        </div>
+        
+
+        <!-- Perfil -->
+        <div class="module">
+            <h3 onclick="toggleVisibility('perfil')">Perfil  <i class="fa-solid fa-address-card"></i></h3>
+            <div id="perfil" class="form-fields">
+                <label>Descripción: <textarea id="descripcionPerfil" oninput="updatePreview()"></textarea></label>
+            </div>
+        </div>
+
+        <!-- Formación -->
+        <div class="module">
+            <h3 onclick="toggleVisibility('formacion')">Formación  <i class="fa-solid fa-graduation-cap"></i> </h3>
+            <div id="formacion" class="form-fields">
+                <label>Formación: <input type="text" id="formacionInput" oninput="updatePreview()"></label>
+                <label>Institución: <input type="text" id="institucion" oninput="updatePreview()"></label>
+                <label>Localidad: <input type="text" id="localidadFormacion" oninput="updatePreview()"></label>
+                <label>Fecha de Inicio: <input type="text" id="fechaInicio" oninput="updatePreview()"></label>
+                <label>Fecha de Fin: <input type="text" id="fechaFin" oninput="updatePreview()"></label>
+                <label>Descripción: <textarea id="descripcionFormacion" oninput="updatePreview()"></textarea></label>
+            </div>
+        </div>
+
+        <!-- Experiencia -->
+        <div class="module">
+            <h3 onclick="toggleVisibility('experiencia')">Experiencia   <i class="fa-solid fa-briefcase"></i> </h3>
+            <div id="experiencia" class="form-fields">
+                <label>Puesto: <input type="text" id="puesto" oninput="updatePreview()"></label>
+                <label>Empleador: <input type="text" id="empleador" oninput="updatePreview()"></label>
+                <label>Localidad: <input type="text" id="localidadExperiencia" oninput="updatePreview()"></label>
+                <label>Fecha de Inicio: <input type="text" id="fechaInicioExperiencia" oninput="updatePreview()"></label>
+                <label>Fecha de Fin: <input type="text" id="fechaFinExperiencia" oninput="updatePreview()"></label>
+                <label>Descripción: <textarea id="descripcionExperiencia" oninput="updatePreview()"></textarea></label>
+            </div>
+        </div>
+
+        <!-- Competencias -->
+        <div class="module">
+            <h3 onclick="toggleVisibility('competencias')">Competencias <i class="fa-solid fa-chart-line"></i> </h3>
+            <div id="competencias" class="form-fields">
+                <label>Habilidad: <input type="text" id="habilidad" oninput="updatePreview()"></label>
+                <label>Nivel: <input type="text" id="nivelCompetencia" oninput="updatePreview()"></label>
+            </div>
+        </div>
+
+        <!-- Idiomas -->
+        <div class="module">
+            <h3 onclick="toggleVisibility('idiomas')">Idiomas <i class="fa-solid fa-language"></i> </h3>
+            <div id="idiomas" class="form-fields">
+                <label>Idioma: <input type="text" id="idioma" oninput="updatePreview()"></label>
+                <label>Nivel: <input type="text" id="nivelIdioma" oninput="updatePreview()"></label>
+            </div>
+        </div>
+
+        <!--Pasatiempos y intereses -->
+        <div class="module">
+         <h3 onclick="toggleVisibility('pasatiempos')"> Pasatiempos e Intereses <i class="fa-solid fa-futbol"></i> </h3>
+            <div id="pasatiempos" class="form-fields">
+                <label > Pasatiempos e Intereses: <input type="text" id="pasatiempos_" oninput="updatePreview()">  </label>
+                
+            </div>
+        </div>
+
+        
+    </div>
+
+    <!-- Vista previa del currículum -->
+
+    <div class="curriculum">
+        <button onclick="corregirOrtografiaForm()" id="btn_corre">Verificar Currículum</button>
+
+
+        <div class="cv-container">
+            <div class="sidebar">
+                <div class="profile-pic">
+                    <img id="previewFoto" src="" alt="Foto de perfil">
+                </div>
+                <h2 id="previewNombre" style="color: #fff;">Edgar Jose</h2>
+                <p class="title" id="previewTitulo">Ingeniero</p>
+                
+                <div class="personal-info">
+                    <h3>Datos personales <i class="fa-solid fa-folder-open"></i> </h3>
+                    <ul>
+                        <li><i class="fa-sharp-duotone fa-solid fa-mobile"></i><span id="previewNombreCompleto">Edgar Jose</span></li>
+                        <li><i class="fa fa-envelope"></i> <span id="previewCorreo">edgarcruz360@gmail.com</span></li>
+                        <li><i class="fa fa-phone"></i> <span id="previewTelefono">76401244</span></li>
+                        <li><i class="fa fa-home"></i> <span id="previewDireccion">Del pali 100 metros sur, 505 Carazo</span></li>
+                        <li> <span  id="datepreview"><i class="fa-solid fa-calendar-days"></i>   01 de Febrero 2003</span></li>
+                    </ul>
+                </div>
+
+                <div class="competencies ">
+                    <h3>Competencias <i class="fa-regular fa-newspaper"></i> </h3>
+                    <p id="previewCompetencia">IA MEJOR DE TODAS LAS HABILIDADES</p>
+                </div>
+
+                <div class="languages">
+                    <h3>Idiomas  <i class="fa-solid fa-language"></i></h3>
+                    <p id="previewIdioma">INGLÉS</p>
+                    <div class="proficiency">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot empty"></span>
+                    </div>
+                </div>
+
+                <div class="hobbies">
+                    <h3>Pasatiempos e intereses <i class="fa-brands fa-stack-overflow"></i></h3>
+                    <p id="previewPasatiempos">JUGAR CALL OF DUTY WARZONE</p>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="section">
+                    <h3>Perfil</h3>
+                    <p id="previewPerfil">Soy un especialista programador</p>
+                </div>
+
+                <div class="section">
+                    <h3>Formación</h3>
+                    <p><strong id="previewFormacion">INGENIERÍA</strong></p>
+                    <p id="previewInstitucion">UNAN-MANAGUA, MANAGUA</p>
+                    <p id="previewDescripcionFormacion">LA MEJOR DE TODAS LAS UNIVERSIDADES</p>
+                    <p id="previewFechasFormacion">Feb 2024 - Ene 2030</p>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia</h3>
+                    <p><strong id="previewPuesto">Programador web</strong></p>
+                    <p id="previewEmpleador">JUNIOR, MÉXICO</p>
+                    <p id="previewDescripcionExperiencia">EMPRESA GANADERA</p>
+                    <p id="previewFechasExperiencia">Ene 2016 - Feb 2029</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const completeButton = document.getElementById('complete-level-button');
+        
+            completeButton.addEventListener('click', () => {
+    alert('Nivel 1 completado.');
+    // Completa el nivel y redirige al index.html
+    completeLevel(); // Cambia aquí el nombre de la función
+    window.location.href = 'index.html';
+       });
+        });
+        
+        function completeLevel() {
+            let currentLevel = parseInt(localStorage.getItem('currentLevel')) || 1; // Obtiene el nivel actual
+            currentLevel++; // Incrementa el nivel
+            localStorage.setItem('currentLevel', currentLevel); // Guarda el nuevo nivel
+        
+        }
+       
+        
+        // Función para alternar la visibilidad de las secciones del formulario
+        function toggleVisibility(sectionId) {
+            var section = document.getElementById(sectionId);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
+        
+        // Previsualización de la imagen cargada
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('previewFoto');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+        </script>
+        
+
+
+<script src="JS/nive1.js">
+
+</script>
+</body>
+</html>

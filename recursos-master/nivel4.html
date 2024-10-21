@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel 4: Desarrollo Organizacional</title>
+    <link rel="stylesheet" href="Style/nivel4.css">
+    <style>
+        /* Estilos para el modal */
+        .modal {
+            display: none; /* Oculto por defecto */
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0, 0, 0, 0.7); 
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .modal-content {
+            background-color: white; 
+            margin: 15% auto; 
+            padding: 20px; 
+            border: 1px solid #888; 
+            border-radius: 10px; 
+            width: 80%; 
+            max-width: 500px; 
+            text-align: center; 
+        }
+
+        .close {
+            color: #aaa; 
+            float: right; 
+            font-size: 28px; 
+            font-weight: bold; 
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black; 
+            text-decoration: none; 
+            cursor: pointer; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Nivel 4: Desarrollo Organizacional</h1>
+            <p>Implementa un plan de desarrollo integral para mejorar el desempeño, la satisfacción y otras áreas críticas de la organización.</p>
+        </header>
+
+        <!-- Desafío Complejo -->
+        <section class="challenge">
+            <h2>Desafío</h2>
+            <p>Analiza la situación actual de la empresa, selecciona múltiples áreas a mejorar, y proporciona un plan estratégico detallado para cada una. Recuerda, las respuestas no deben ser obvias y pueden requerir un análisis profundo.</p>
+            <form id="developmentForm">
+                <!-- Análisis de la situación actual -->
+                <label for="analisis">Análisis de la situación actual:</label>
+                <textarea id="analisis" name="analisis" placeholder="Describe la situación actual de la organización..."></textarea>
+
+                <!-- Áreas de mejora -->
+                <label for="areas">Áreas a mejorar:</label>
+                <select id="areas" name="areas" multiple>
+                    <option value="desempeño">Desempeño</option>
+                    <option value="satisfacción">Satisfacción</option>
+                    <option value="comunicación">Comunicación</option>
+                    <option value="liderazgo">Liderazgo</option>
+                    <option value="innovación">Innovación</option>
+                    <option value="colaboración">Colaboración</option>
+                </select>
+
+                <!-- Plan estratégico -->
+                <label for="plan">Plan estratégico:</label>
+                <textarea id="plan" name="plan" placeholder="Detalla tu plan estratégico para las áreas seleccionadas..."></textarea>
+
+                <!-- Resultados esperados -->
+                <label for="resultado_corto">Resultados esperados (Corto plazo):</label>
+                <textarea id="resultado_corto" name="resultado_corto" placeholder="Describe los resultados esperados a corto plazo..."></textarea>
+
+                <label for="resultado_largo">Resultados esperados (Largo plazo):</label>
+                <textarea id="resultado_largo" name="resultado_largo" placeholder="Describe los resultados esperados a largo plazo..."></textarea>
+
+                <!-- Indicadores de éxito -->
+                <label for="indicadores">Indicadores de éxito:</label>
+                <textarea id="indicadores" name="indicadores" placeholder="¿Cómo medirás el éxito del plan?"></textarea>
+
+                <!-- Riesgos y mitigación -->
+                <label for="riesgos">Riesgos potenciales:</label>
+                <textarea id="riesgos" name="riesgos" placeholder="¿Cuáles son los riesgos y cómo los mitigarás?"></textarea>
+
+                <!-- Recursos necesarios -->
+                <label for="recursos">Recursos necesarios:</label>
+                <textarea id="recursos" name="recursos" placeholder="¿Qué recursos necesitarás para implementar el plan?"></textarea>
+
+                <!-- Estrategias de comunicación -->
+                <label for="comunicacion">Estrategias de comunicación:</label>
+                <textarea id="comunicacion" name="comunicacion" placeholder="¿Cómo comunicarás el plan a la organización?"></textarea>
+
+                <button type="button" onclick="evaluarPlan()">Evaluar Plan</button>
+                <br>
+                <button type="button" id="retry-button" onclick="reiniciarFormulario()">Reintentar</button> <!-- Botón de Reintentar -->
+            </form>
+        </section>
+
+        <!-- Sección de evaluación -->
+        <section id="evaluationResult" class="hidden">
+            <h2>Evaluación</h2>
+            <p id="score"></p>
+            <div id="feedback"></div>
+        </section>
+
+        <!-- Botón para completar el nivel -->
+        <button id="complete-level-button" class="hidden">Completar Nivel</button>
+    </div>
+
+    <!-- Modal -->
+    <div id="completionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>¡Felicidades!</h2>
+            <p>Has finalizado el Nivel 4. ¡Bien hecho!</p>
+            <button id="next-level-button">Ir a la Página Principal</button> <!-- Cambiado texto del botón -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const completeButton = document.getElementById('complete-level-button');
+            const modal = document.getElementById('completionModal');
+            const closeModal = document.getElementById('closeModal');
+            const nextLevelButton = document.getElementById('next-level-button');
+
+            completeButton.addEventListener('click', () => {
+                // Completar nivel
+                completeLevel();
+                // Mostrar modal
+                modal.style.display = "flex";
+            });
+
+            closeModal.addEventListener('click', () => {
+                modal.style.display = "none";
+                window.location.href = 'index.html'; // Redirigir a la página principal
+            });
+
+            nextLevelButton.addEventListener('click', () => {
+                modal.style.display = "none";
+                window.location.href = 'index.html'; // Cambiado para redirigir a la página principal
+            });
+        });
+
+        function completeLevel() {
+            let currentLevel = parseInt(localStorage.getItem('currentLevel')) || 4; // Obtiene el nivel actual
+            currentLevel++; // Incrementa el nivel
+            localStorage.setItem('currentLevel', currentLevel); // Guarda el nuevo nivel
+        }
+
+        // Lógica de evaluación compleja
+        function evaluarPlan() {
+            const analisis = document.getElementById('analisis').value.trim();
+            const plan = document.getElementById('plan').value.trim();
+            const resultadoCorto = document.getElementById('resultado_corto').value.trim();
+            const resultadoLargo = document.getElementById('resultado_largo').value.trim();
+            const indicadores = document.getElementById('indicadores').value.trim();
+            const riesgos = document.getElementById('riesgos').value.trim();
+            const recursos = document.getElementById('recursos').value.trim();
+            const comunicacion = document.getElementById('comunicacion').value.trim();
+            const evaluationResult = document.getElementById('evaluationResult');
+            const scoreText = document.getElementById('score');
+            const feedbackDiv = document.getElementById('feedback');
+            const completeButton = document.getElementById('complete-level-button');
+
+            // Validación de campos
+            if (analisis === "" || plan === "" || resultadoCorto === "" || resultadoLargo === "" || indicadores === "" || riesgos === "" || recursos === "" || comunicacion === "") {
+                alert("Por favor, completa todos los campos antes de evaluar.");
+                return;
+            }
+
+            // Simular una evaluación del plan basado en varias áreas
+            let score = 0;
+            const areasSeleccionadas = document.getElementById('areas');
+            const seleccionadasCount = Array.from(areasSeleccionadas.selectedOptions).length;
+
+            // Condiciones de evaluación
+            if (plan.length > 150 && resultadoCorto.length > 50 && resultadoLargo.length > 50 && seleccionadasCount > 2 && indicadores.length > 20) {
+                score = Math.floor(Math.random() * 20) + 85; // Calificación entre 85 y 100
+            } else if (plan.length > 100 && resultadoCorto.length > 30 && resultadoLargo.length > 30 && seleccionadasCount > 1) {
+                score = Math.floor(Math.random() * 30) + 50; // Calificación entre 50 y 85
+            } else {
+                score = Math.floor(Math.random() * 30) + 20; // Calificación entre 20 y 50
+            }
+
+            // Mostrar resultado de evaluación
+            scoreText.innerText = `Tu puntaje es: ${score}`;
+            if (score >= 85) {
+                feedbackDiv.innerText = "¡Excelente trabajo! Tu plan es muy completo.";
+            } else if (score >= 50) {
+                feedbackDiv.innerText = "Buen trabajo, pero hay áreas que podrías mejorar.";
+            } else {
+                feedbackDiv.innerText = "Tu plan necesita más desarrollo y claridad.";
+            }
+
+            evaluationResult.classList.remove('hidden'); // Mostrar resultados de evaluación
+            completeButton.classList.remove('hidden'); // Mostrar botón para completar el nivel
+        }
+
+        // Función para reiniciar el formulario
+        function reiniciarFormulario() {
+            document.getElementById('developmentForm').reset(); // Reinicia el formulario
+            document.getElementById('evaluationResult').classList.add('hidden'); // Oculta los resultados de evaluación
+            document.getElementById('score').innerText = ''; // Limpia el puntaje
+            document.getElementById('feedback').innerText = ''; // Limpia el feedback
+            document.getElementById('complete-level-button').classList.add('hidden'); // Oculta el botón de completar nivel
+        }
+    </script>
+</body>
+</html>

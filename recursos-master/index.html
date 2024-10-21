@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recurso Master: El Juego de la Evaluación Integral</title>
+    <link rel="stylesheet" href="Style/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos para el modal */
+        .modal {
+            display: none; /* Oculto por defecto */
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0, 0, 0, 0.7); 
+            justify-content: center; 
+            align-items: center; 
+        }
+
+        .modal-content {
+            background-color: #333; /* Fondo oscuro para el modal */
+            color: #fff; /* Texto blanco */
+            margin: 15% auto; 
+            padding: 20px; 
+            border: 1px solid #888; 
+            border-radius: 10px; 
+            width: 80%; 
+            max-width: 500px; 
+            text-align: center; 
+        }
+
+        .close {
+            color: #aaa; 
+            float: right; 
+            font-size: 28px; 
+            font-weight: bold; 
+        }
+
+        .close:hover,
+        .close:focus {
+            color: white; /* Cambiar a blanco en hover */
+            text-decoration: none; 
+            cursor: pointer; 
+        }
+
+        table {
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #fff; /* Bordes blancos */
+            padding: 10px; 
+            text-align: left;
+        }
+
+        th {
+            background-color: #555; /* Fondo gris para los encabezados */
+            color: white; /* Texto blanco */
+        }
+
+        tr:hover {
+            background-color: #444; /* Color de fondo en hover */
+        }
+
+        .button {
+            background-color: #4CAF50; /* Color verde */
+            border: none;
+            color: white; /* Texto blanco */
+            padding: 10px 20px; 
+            text-align: center; 
+            text-decoration: none; 
+            display: inline-block; 
+            font-size: 16px; 
+            margin: 10px 0; 
+            cursor: pointer; 
+            border-radius: 5px; 
+        }
+
+        .button:hover {
+            background-color: #45a049; /* Color más oscuro al hacer hover */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Recurso Master <i class="fa-brands fa-pagelines"></i></h1>
+        <nav>
+            <ul>
+                <li><a href="#" id="start-game">Iniciar Juego <i class="fas fa-gamepad"></i></a></li>
+                <li><a href="#" id="leaderboard">Leaderboard</a></li>
+            </ul>
+        </nav>
+        <div class="trophy-container">
+            <div class="trofeos">
+                <i class="fa-sharp-duotone fa-solid fa-trophy"></i> 25
+            </div>
+            <div class="medallas">
+                <i class="fas fa-medal"></i> 25
+            </div>
+            <div class="estrellas">
+                <i class="fas fa-star"></i> 25
+            </div>
+        </div>
+    </header>
+    
+    <main id="game-container">
+        <div class="timeline">
+            <div class="timeline-item" id="level-1">
+                <div class="circle"></div>
+                <h3>Nivel 1</h3>
+                <p>Reclutamiento y Selección</p>
+            </div>
+            <div class="timeline-item locked" id="level-2">
+                <div class="circle"></div>
+                <h3>Nivel 2</h3>
+                <p>Gestión de Conflictos</p>
+            </div>
+            <div class="timeline-item locked" id="level-3">
+                <div class="circle"></div>
+                <h3>Nivel 3</h3>
+                <p>Administración de Compensaciones</p>
+            </div>
+            <div class="timeline-item locked" id="level-4">
+                <div class="circle"></div>
+                <h3>Nivel 4</h3>
+                <p>Desarrollo Organizacional</p>
+            </div>
+        </div>
+
+        <div class="progress-bar" id="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+        
+        <button id="reset-progress-button">Eliminar Progreso</button>
+        
+        <div class="game-description">
+            <p>
+                "Recurso Master" es una plataforma de evaluación gamificada donde los estudiantes de Gestión de Recursos Humanos
+                enfrentan desafíos simulados en el campo de los recursos humanos. Completa cada nivel y demuestra tus habilidades
+                en selección de personal, gestión de conflictos, administración de compensaciones y desarrollo organizacional.
+                ¡Compite por un lugar en la tabla de líderes y conviértete en un verdadero maestro de los recursos humanos!
+            </p>
+        </div>
+        
+        <div id="congratulations-message">
+            ¡Felicidades! Has completado todos los niveles.
+        </div>
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Recurso Master. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Modal para el leaderboard -->
+    <div id="leaderboardModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Leaderboard</h2>
+            <label for="playerName">Nombre del Jugador:</label>
+            <input type="text" id="playerName" placeholder="Ingresa tu nombre" />
+            <button id="savePlayerButton" class="button">Guardar Jugador</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Nivel</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardTableBody">
+                    <!-- Aquí se agregarán los datos de los estudiantes -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="JS/index.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const leaderboardButton = document.getElementById('leaderboard');
+            const leaderboardModal = document.getElementById('leaderboardModal');
+            const closeModal = document.getElementById('closeModal');
+            const leaderboardTableBody = document.getElementById('leaderboardTableBody');
+            const playerNameInput = document.getElementById('playerName');
+            const savePlayerButton = document.getElementById('savePlayerButton');
+            const resetProgressButton = document.getElementById('reset-progress-button');
+
+            // Cargar datos del jugador del almacenamiento local
+            let players = JSON.parse(localStorage.getItem('players')) || []; // Arreglo de jugadores
+            let currentPlayer = null; // Jugador actual que se va a usar
+            let currentLevel = 1; // Nivel inicial
+
+            // Mostrar modal con los datos del leaderboard
+            leaderboardButton.addEventListener('click', () => {
+                updateLeaderboardTable();
+                leaderboardModal.style.display = "flex";
+            });
+
+            // Guardar nombre y nivel en el almacenamiento local
+            savePlayerButton.addEventListener('click', () => {
+                const name = playerNameInput.value.trim();
+                if (name) {
+                    currentPlayer = { name, level: currentLevel }; // Guardar el jugador actual
+                    players.push(currentPlayer); // Agregar nuevo jugador
+                    localStorage.setItem('players', JSON.stringify(players));
+                    playerNameInput.value = ''; // Limpiar el campo de entrada
+                    updateLeaderboardTable();
+                    alert('Jugador guardado!');
+                } else {
+                    alert('Por favor, ingresa un nombre válido.');
+                }
+            });
+
+            // Cerrar el modal
+            closeModal.addEventListener('click', () => {
+                leaderboardModal.style.display = "none";
+            });
+
+            // Cerrar el modal al hacer clic fuera de él
+            window.onclick = function(event) {
+                if (event.target === leaderboardModal) {
+                    leaderboardModal.style.display = "none";
+                }
+            };
+
+            // Eliminar progreso
+            resetProgressButton.addEventListener('click', () => {
+                // Reiniciar solo el progreso del juego, pero no el jugador
+                alert('El progreso ha sido eliminado, pero tus jugadores se mantienen.');
+                currentLevel = 1; // Reiniciar el nivel actual
+                localStorage.setItem('playerLevel', currentLevel); // Actualizar el nivel en almacenamiento local
+            });
+
+            // Función para actualizar la tabla del leaderboard
+            function updateLeaderboardTable() {
+                leaderboardTableBody.innerHTML = ''; // Limpiar la tabla antes de agregar datos
+                players.forEach(player => {
+                    const newRow = `<tr><td>${player.name}</td><td>${player.level}</td></tr>`;
+                    leaderboardTableBody.insertAdjacentHTML('beforeend', newRow);
+                });
+            }
+
+            // Lógica del juego
+            document.getElementById('start-game').addEventListener('click', () => {
+                if (currentLevel <= 4) {
+                    alert(`Iniciando el Nivel ${currentLevel}`);
+                    // Simulando que el jugador completa el nivel
+                    setTimeout(() => {
+                        alert(`¡Felicidades! Has completado el Nivel ${currentLevel}`);
+                        currentLevel++; // Aumentar el nivel actual
+                        if (currentPlayer) {
+                            const playerIndex = players.findIndex(player => player.name === currentPlayer.name); // Encontrar el índice del jugador actual
+                            if (playerIndex !== -1) {
+                                players[playerIndex].level = currentLevel; // Actualizar el nivel del jugador
+                                localStorage.setItem('players', JSON.stringify(players)); // Guardar los cambios en el almacenamiento local
+                                updateLeaderboardTable(); // Actualizar la tabla del leaderboard
+                            }
+                        }
+                    }, 2000); // Simulación de tiempo de juego
+                } else {
+                    alert('¡Has completado todos los niveles!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

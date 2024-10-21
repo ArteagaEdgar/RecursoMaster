@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel 2 - Gestión de Conflictos</title>
+    <link rel="stylesheet" href="Style/index.css">
+    <link rel="stylesheet" href="Style/nivel2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+</head>
+<body>
+    <header class="nivel2">
+        <div class="RecursosMaster">
+            Recursos Master <i class="fa-brands fa-pagelines"></i>
+        </div>
+        <div id="Centro_Juegos">
+            <nav>
+                <ul>
+                    <li><a href="#" id="start-game">Iniciar Juego <i class="fas fa-gamepad"></i></a></li>
+                    <li><a href="#" id="leaderboard">Leaderboard</a></li>
+                    <li><i class="fa-solid fa-play"></i> <a href="#"> Nivel 2</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="Trofeos">
+            <i class="fa-solid fa-trophy"></i> 25
+            <i class="fas fa-medal"></i> 25
+            <i class="fa-solid fa-star"></i> 25
+        </div>
+    </header>
+
+    <main>
+        <section id="scenario">
+            <h2>Escenario de Conflicto Complejo</h2>
+            <div class="dialogue">
+                <div class="people">
+                    <div class="person juan">
+                        <img src="img/Juan.jfif" alt="Juan">
+                        <p><strong>Juan:</strong> "María, no es justo que tú siempre tomes las decisiones sin consultarme. Yo también soy parte del equipo."</p>
+                    </div>
+                    <div class="person maria">
+                        <img src="img/Maria.webp" alt="María">
+                        <p><strong>María:</strong> "Entiendo, Juan, pero si esperáramos a que todos estén de acuerdo, nunca avanzaríamos. Alguien tiene que tomar la iniciativa."</p>
+                    </div>
+                </div>
+                <p><strong>Contexto:</strong> El conflicto ha afectado la moral del equipo, reduciendo la productividad en un 15%. Otros miembros del equipo, como Ana y Luis, han expresado su frustración en privado.</p>
+                <p><strong>Situación Adicional:</strong> El proyecto está atrasado y una entrega importante se acerca en 3 días, lo que agrega presión sobre la resolución del conflicto.</p>
+            </div>
+        </section>
+
+        <section id="options">
+            <h3>¿Cómo mediarías en esta situación?</h3>
+            <div id="options-container" class="flex-container"></div>
+        </section>
+    </main>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-modal">&times;</span>
+            <h3>Resultado</h3>
+            <p id="modal-result-description"></p>
+            <div id="modal-additional-feedback"></div>
+            <button id="retry-button" onclick="retryLevel()">Intentar de nuevo</button>
+        </div>
+    </div>
+
+    <div id="error-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-error-modal">&times;</span>
+            <h3>Error</h3>
+            <p>La elección estuvo mal. ¡Intenta nuevamente!</p>
+            <button onclick="retryLevel()">Volver a Intentar</button>
+        </div>
+    </div>
+
+    <script>
+        const options = [
+            {
+                text: "Organizar una reunión de equipo completa, escuchando a cada miembro antes de tomar una decisión.",
+                feedback: "Decisión equilibrada, pero tardía. Se logró un consenso, pero el proyecto se atrasó más.",
+                score: 6,
+                additionalFeedback: "El equipo aprecia la oportunidad de ser escuchado, pero la presión de la entrega no permitió aprovecharlo al máximo."
+            },
+            {
+                text: "Tomar una decisión unilateral para acelerar el proceso, ignorando las preocupaciones para cumplir con el plazo.",
+                feedback: "Rápida pero ineficaz. El conflicto se intensificó y algunos miembros amenazaron con renunciar.",
+                score: 3,
+                additionalFeedback: "La entrega se realizó a tiempo, pero la moral del equipo quedó muy afectada."
+            },
+            {
+                text: "Asignar roles claros para Juan y María, pero dejar la responsabilidad de mejorar la comunicación entre ellos.",
+                feedback: "Buena iniciativa, pero se necesitaba un liderazgo más activo. El conflicto persistió por la falta de seguimiento.",
+                score: 9,
+                additionalFeedback: "María y Juan lograron cooperar en el corto plazo, pero el conflicto resurgió meses después."
+            },
+            {
+                text: "Dividir las tareas entre los miembros del equipo y asignar a un mediador externo para resolver el conflicto.",
+                feedback: "Enfoque profesional, pero no se ajustó a los tiempos del proyecto. Se aprendió de la experiencia, aunque se falló en la entrega.",
+                score: 5,
+                additionalFeedback: "El mediador externo ayudó a reducir tensiones, pero no fue suficiente para cumplir con la fecha límite."
+            },
+            {
+                text: "Convocar a una reunión para discutir abiertamente el conflicto y permitir que todos los miembros del equipo expresen sus opiniones, creando un plan de acción conjunto.",
+                feedback: "Solución efectiva que abordó las preocupaciones de todos los miembros del equipo, mejorando la moral y la productividad.",
+                score: 10,
+                additionalFeedback: "La reunión permitió una colaboración efectiva, y el equipo se sintió valorado y escuchado."
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            shuffleArray(options);
+            const optionsContainer = document.getElementById('options-container');
+
+            options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.classList.add('option');
+                optionDiv.innerHTML = `
+                    <button onclick="chooseOption(${index})">${option.text}</button>
+                    <p>${option.feedback}</p>
+                `;
+                optionsContainer.appendChild(optionDiv);
+            });
+        });
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function chooseOption(index) {
+            const selectedOption = options[index];
+            const score = selectedOption.score;
+
+            // Guardar la puntuación en localStorage
+            localStorage.setItem('level2Score', score);
+
+            // Mostrar el resultado y proceder según la puntuación
+            showResultModal(selectedOption);
+        }
+
+        function showResultModal(selectedOption) {
+            const modal = document.getElementById('modal');
+            const modalResultDescription = document.getElementById('modal-result-description');
+            const modalAdditionalFeedback = document.getElementById('modal-additional-feedback');
+
+            modalResultDescription.textContent = `${selectedOption.feedback} Puntuación obtenida: ${selectedOption.score}/10`;
+            modalAdditionalFeedback.innerHTML = `<p>${selectedOption.additionalFeedback}</p>`;
+
+            // Mostrar el modal de resultados
+            modal.style.display = 'block';
+
+            // Verificar si se completa el nivel o si se necesita reintentar
+            if (selectedOption.score >= 9) {
+                setTimeout(nextLevel, 2000); // Redirigir después de 2 segundos
+            } else {
+                setTimeout(showErrorModal, 2000); // Mostrar el modal de error después de 2 segundos
+            }
+        }
+
+        function showErrorModal() {
+            const errorModal = document.getElementById('error-modal');
+            errorModal.style.display = 'block';
+        }
+
+        function closeModal() {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+
+        function retryLevel() {
+            // Recargar la página para intentar nuevamente
+            location.reload();
+        }
+
+        // Cerrar los modales al hacer clic en la 'X'
+        document.getElementById('close-modal').onclick = closeModal;
+        document.getElementById('close-error-modal').onclick = closeModal;
+
+        function completeLevel() {
+            let currentLevel = parseInt(localStorage.getItem('currentLevel')) || 2;
+            currentLevel++;
+            localStorage.setItem('currentLevel', currentLevel);
+        }
+
+        function nextLevel() {
+            completeLevel();
+            window.location.href = 'index.html'; // Redirige al siguiente nivel
+        }
+    </script>
+</body>
+</html>

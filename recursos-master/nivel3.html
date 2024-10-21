@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel 3: Administración de Compensaciones y Beneficios</title>
+    <link rel="stylesheet" href="Style/index.css">
+    <link rel="stylesheet" href="Style/nivel3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    </head>
+
+<body>
+    <header class="nivel3">
+        <div class="RecursosMaster">
+            Recursos Master <i class="fa-brands fa-pagelines"></i>
+        </div>
+        <div id="Centro_Juegos">
+            <nav>
+                <ul>
+                    <li><a href="#" id="start-game">Iniciar Juego <i class="fas fa-gamepad"></i></a></li>
+                    <li><a href="#" id="leaderboard">Leaderboard</a></li>
+                    <li><i class="fa-solid fa-play"></i> <a href="#"> Nivel 3</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="Trofeos">
+            <i class="fa-solid fa-trophy"></i> 25
+            <i class="fas fa-medal"></i> 25
+            <i class="fa-solid fa-star"></i> 25
+        </div>
+    </header>
+
+    <main>
+        <section id="scenario">
+            <h2>Desafío: Diseño de Paquete de Compensación</h2>
+            <p>Los estudiantes deben diseñar un paquete de compensación para diferentes tipos de empleados: trabajadores
+                de tiempo completo, trabajadores a tiempo parcial y contratistas. Considera factores como salario base,
+                bonificaciones, beneficios de salud y otros incentivos.</p>
+        </section>
+
+        <section id="form-section">
+            <h3>Diseña tu Paquete de Compensación</h3>
+            <form id="compensation-form">
+                <label for="employee-type">Tipo de Empleado:</label>
+                <select id="employee-type" required>
+                    <option value="full-time">Tiempo Completo</option>
+                    <option value="part-time">Tiempo Parcial</option>
+                    <option value="contractor">Contratista</option>
+                </select>
+
+                <label for="base-salary">Salario Base:</label>
+                <input type="number" id="base-salary" placeholder="Ingresa el salario base" required>
+
+                <label for="bonus">Bonificación:</label>
+                <input type="number" id="bonus" placeholder="Ingresa la bonificación" required>
+
+                <label for="health-benefits">Beneficios de Salud (si aplica):</label>
+                <input type="text" id="health-benefits" placeholder="Ej. Seguro médico">
+
+                <label for="other-incentives">Otros Incentivos (si aplica):</label>
+                <input type="text" id="other-incentives" placeholder="Ej. Vacaciones pagadas">
+
+                <button type="submit" class="btn-submit">Enviar Paquete de Compensación</button>
+            </form>
+        </section>
+
+        <div id="help-text" class="help-text">
+            <p>Este nivel se enfoca en la Administración de Compensaciones y Beneficios. Debes diseñar un paquete que sea justo y atractivo para diferentes tipos de empleados. Asegúrate de que tu diseño se ajuste a las mejores prácticas del mercado para obtener una puntuación alta.</p>
+            <h4>Ejemplo de Cálculo de Puntuación:</h4>
+            <p>Para obtener una puntuación alta, considera lo siguiente:</p>
+            <ul>
+                <li><strong>Empleado a Tiempo Completo:</strong> Si estableces un salario base de $50,000 y una bonificación de $5,000, obtendrás 10 puntos.</li>
+                <li><strong>Empleado a Tiempo Parcial:</strong> Si estableces un salario base de $25 por hora, obtendrás 8 puntos si cumples con el mínimo.</li>
+                <li><strong>Contratista:</strong> Para un contratista, establece un salario de $30 por hora con una bonificación, y obtendrás 9 puntos.</li>
+            </ul>
+            <p>Asegúrate de que el paquete de compensación esté alineado con estas recomendaciones para maximizar tu puntuación.</p>
+        </div>
+
+        <button id="complete-level-button" class="btn-complete" style="display: none;">Completar Nivel</button>
+    </main>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-modal">&times;</span>
+            <h3>Resultado</h3>
+            <p id="modal-result-description"></p>
+            <div id="modal-additional-feedback"></div>
+            <button id="retry-button" class="btn-retry">Intentar de nuevo</button>
+        </div>
+    </div>
+
+    <script>
+       
+
+        document.getElementById('complete-level-button').addEventListener('click', () => {
+            alert('Nivel 3 completado.');
+            completeLevel(); // Llama a la función para completar el nivel
+            window.location.href = 'index.html';
+        });
+
+        function completeLevel() {
+            let currentLevel = parseInt(localStorage.getItem('currentLevel')) || 3; // Obtiene el nivel actual
+            currentLevel++; // Incrementa el nivel
+            localStorage.setItem('currentLevel', currentLevel); // Guarda el nuevo nivel
+        }
+
+
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif; /* Tipografía general */
+            margin: 0; /* Sin margen */
+            padding: 0; /* Sin espaciado */
+            background-color: #f4f4f4; /* Color de fondo */
+        }
+
+
+        h2 {
+            color: #333; /* Color del título */
+        }
+
+        form {
+            background: #fff; /* Fondo blanco para el formulario */
+            padding: 20px; /* Espaciado interno */
+            border-radius: 5px; /* Bordes redondeados */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra del cuadro */
+        }
+
+        .help-text {
+            margin-top: 20px; /* Espacio arriba del cuadro de texto de ayuda */
+            padding: 10px; /* Espaciado interno */
+            background: #e8f5e9; /* Fondo suave */
+            border-left: 5px solid #4CAF50; /* Línea de la izquierda */
+        }
+
+        .btn-complete {
+            background-color: #4CAF50; /* Color de fondo */
+            color: white; /* Color del texto */
+            padding: 10px 20px; /* Espaciado interno */
+            border: none; /* Sin borde */
+            border-radius: 5px; /* Bordes redondeados */
+            cursor: pointer; /* Cambia el cursor */
+            margin-top: 20px; /* Espacio arriba */
+            display: none; /* Por defecto, oculto */
+        }
+
+        .btn-complete:hover {
+            background-color: #45a049; /* Color al pasar el mouse */
+        }
+
+        .modal {
+            display: none; /* Oculto por defecto */
+            position: fixed; /* Fijo en la pantalla */
+            z-index: 1; /* Encima de otros elementos */
+            left: 0;
+            top: 0;
+            width: 100%; /* Ancho completo */
+            height: 100%; /* Alto completo */
+            overflow: auto; /* Desplazamiento si es necesario */
+            background-color: rgb(0, 0, 0); /* Color de fondo */
+            background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro transparente */
+        }
+
+        .modal-content {
+            background-color: #fefefe; /* Fondo blanco */
+            margin: 15% auto; /* Margen centrado */
+            padding: 20px; /* Espaciado interno */
+            border: 1px solid #888; /* Borde */
+            width: 80%; /* Ancho */
+        }
+
+        .close-button {
+            color: #aaa; /* Color del botón de cerrar */
+            float: right; /* A la derecha */
+            font-size: 28px; /* Tamaño del texto */
+            font-weight: bold; /* Negrita */
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black; /* Color al pasar el mouse */
+            text-decoration: none; /* Sin subrayado */
+            cursor: pointer; /* Cambia el cursor */
+        }
+    </style>
+
+    <script src="JS/nivel3.js"></script>
+</body>
+
+</html>

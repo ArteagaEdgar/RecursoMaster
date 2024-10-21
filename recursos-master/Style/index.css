@@ -1,0 +1,293 @@
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(135deg, #3a7bd5, #00d4ff);
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ffeb3b;
+}
+
+.trophy-container {
+    display: flex;
+    gap: 10px;
+}
+
+.trophy-container i {
+    font-size: 24px;
+    color: #ffeb3b;
+}
+
+#game-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.progress-bar {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 20px;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.progress {
+    background-color: #3a7bd5;
+    height: 100%;
+    width: 0;
+    transition: width 0.4s ease;
+}
+
+.timeline {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    align-items: center;
+    background: #fff;
+    border: 2px solid #3a7bd5;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 20px auto;
+    flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
+}
+
+.timeline-item {
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.8;
+}
+
+.timeline-item.locked {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.timeline-item:not(.locked):hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.timeline-item h3 {
+    margin: 10px 0;
+    color: #3a7bd5;
+}
+
+.timeline-item p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    background-color: #3a7bd5;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    width: 100px;
+    height: 2px;
+    background-color: #3a7bd5;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.timeline-item:last-child .circle::after {
+    display: none;
+}
+
+.game-description {
+    margin-top: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #3a7bd5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #444;
+    line-height: 1.6;
+}
+
+footer {
+    background: linear-gradient(135deg, #3a7bd5, #00d4ff);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+  /* Estilos para el modal */
+  .modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.7); 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.modal-content {
+    background-color: white; 
+    margin: 15% auto; 
+    padding: 20px; 
+    border: 1px solid #888; 
+    border-radius: 10px; 
+    width: 80%; 
+    max-width: 500px; 
+    text-align: center; 
+}
+
+.close {
+    color: #aaa; 
+    float: right; 
+    font-size: 28px; 
+    font-weight: bold; 
+}
+
+.close:hover,
+.close:focus {
+    color: black; 
+    text-decoration: none; 
+    cursor: pointer; 
+}
+
+table {
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd; 
+    padding: 8px; 
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2; 
+}
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column; /* Cambiar la dirección del flex para pantallas pequeñas */
+        align-items: flex-start; /* Alinear los elementos al inicio */
+    }
+
+    nav ul {
+        flex-direction: column; /* Cambiar a columna */
+        align-items: flex-start; /* Alinear elementos al inicio */
+        margin-top: 10px; /* Espacio entre el título y el menú */
+    }
+
+    .timeline {
+        flex-direction: column; /* Cambiar a columna para móviles */
+        align-items: stretch; /* Que los elementos ocupen todo el ancho */
+    }
+
+    .timeline-item {
+        width: 100%; /* Cada nivel ocupa todo el ancho */
+    }
+
+    .progress-bar {
+        width: 90%; /* Aumentar el ancho de la barra de progreso */
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem; /* Reducir tamaño del encabezado */
+    }
+
+    nav ul li {
+        margin: 0 5px; /* Reducir margen de los elementos del menú */
+    }
+
+    .trophy-container i {
+        font-size: 20px; /* Reducir tamaño de los íconos */
+    }
+
+    .game-description {
+        padding: 10px; /* Reducir el padding de la descripción del juego */
+    }
+}
+
+/* Estilos para el botón de eliminar progreso */
+#reset-progress-button {
+    background-color: #30d8ee; /* Color de fondo rojo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 1em; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+}
+
+#reset-progress-button:hover {
+    background-color: #ff0000; /* Color de fondo más oscuro al pasar el mouse */
+}
+
+#congratulations-message {
+    display: none; /* Inicialmente oculto */
+    font-size: 1.5em; /* Tamaño del texto */
+    color: green; /* Color del texto */
+    margin-top: 20px; /* Espacio superior */
+}
